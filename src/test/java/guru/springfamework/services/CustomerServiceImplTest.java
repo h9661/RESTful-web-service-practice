@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 public class CustomerServiceImplTest {
@@ -54,5 +53,24 @@ public class CustomerServiceImplTest {
 
         assertEquals(customer.getId(), customerDTO.get().getId());
         assertEquals(customer.getLastName(), customerDTO.get().getLastName());
+    }
+
+    @Test
+    public void createNewCustomer() throws Exception{
+        CustomerDTO customerDTO = new CustomerDTO(1L);
+        customerDTO.setFirstName("chan");
+        customerDTO.setLastName("woo");
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setFirstName(customerDTO.getFirstName());
+        customer.setLastName(customerDTO.getLastName());
+
+        when(customerRepository.save(any())).thenReturn(customer);
+
+        CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
+
+        assertEquals(savedDto.getId(), customer.getId());
+        assertEquals(savedDto.getFirstName(), customer.getFirstName());
     }
 }

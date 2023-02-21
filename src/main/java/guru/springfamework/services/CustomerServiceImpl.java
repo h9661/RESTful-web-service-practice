@@ -39,4 +39,12 @@ public class CustomerServiceImpl implements CustomerService {
         // todo: handling not found exception.
         return Optional.empty();
     }
+
+    @Override
+    public CustomerDTO createNewCustomer(CustomerDTO customerDTO){
+        Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+        customer.setCustomerUrl("/api/v1/customer/" + customer.getId());
+
+        return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+    }
 }
