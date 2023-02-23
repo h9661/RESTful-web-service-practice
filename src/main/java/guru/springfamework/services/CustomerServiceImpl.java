@@ -66,4 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerMapper.customerToCustomerDTO(savedCustomer);
     }
+
+    @Override
+    public void deleteCustomer(Long Id) {
+        customerRepository.deleteById(Id);
+    }
 }

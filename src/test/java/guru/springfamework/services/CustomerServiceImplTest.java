@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CustomerServiceImplTest {
 
@@ -91,5 +91,18 @@ public class CustomerServiceImplTest {
 
         assertEquals(updatingCustomer.getFirstName(), returnedCustomer.getFirstName());
         assertEquals(updatingCustomer.getLastName(), returnedCustomer.getLastName());
+    }
+
+    @Test
+    public void deleteCustomer() {
+        //given
+        Long idToDelete = 1L;
+
+        //when
+        customerService.deleteCustomer(idToDelete);
+
+        //no 'when', since method has void return type
+
+        verify(customerRepository, times(1)).deleteById(anyLong());
     }
 }
